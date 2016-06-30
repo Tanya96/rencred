@@ -26,7 +26,7 @@ public class Test1 {
     {
         //найти, как сохранить логитип сайта
     }
-    
+
     @Test
     public void gotoInvestorsPage(){
         driver.get("https://rencredit.ru/investors/reporting/");
