@@ -22,4 +22,16 @@ public class Test1 {
         assertTrue(driver.getTitle().contains("Ренессанс Кредит"));
     }
 
+    public void saveLogo()
+    {
+        //найти, как сохранить логитип сайта
+    }
+    
+    @Test
+    public void gotoInvestorsPage(){
+        driver.get("https://rencredit.ru/investors/reporting/");
+        //найти, как сохранить pdf
+
+    }
+
 }
