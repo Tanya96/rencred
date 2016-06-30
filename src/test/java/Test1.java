@@ -33,6 +33,7 @@ public class Test1 {
         driver.get("https://rencredit.ru/investors/reporting/");
         //найти, как сохранить pdf
 
+
     }
 
 }
