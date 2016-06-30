@@ -25,6 +25,7 @@ public class Test1 {
     public void saveLogo()
     {
         //найти, как сохранить логитип сайта
+        //текст
     }
 
     @Test
