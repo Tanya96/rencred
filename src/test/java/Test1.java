@@ -1,5 +1,6 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -90,21 +91,18 @@ public class Test1 {
 
         String beforeSum = gotoDeposit();
 
-        WebElement slider = $(By.xpath("//div[@data-property='amount']/span[contains(@class, 'ui-slider-handle ui-state-default ui-corner-all')]"));
-//        int width = slider.getSize().getWidth();
-//        Actions actions = new Actions(getWebDriver());
-//        actions.dragAndDropBy(slider, 2, 0).perform();
-       // System.out.println(width);
+        WebElement slider = $(By.xpath("//div[@data-property='amount']/div/div/span"));
+        System.out.println(slider.getAttribute("style"));
+
+
+        //Дима, хелп!!!
 
         Actions move = new Actions(getWebDriver());
-        move.moveToElement(slider, (100), 0).click();
-        move.build().perform();
-        System.out.println("работает");
-
-       // move.clickAndHold(slider).moveByOffset(20, 0).release().perform();
-       // actions.dragAndDropBy(slider, 2, 0).perform();
+        Action action = move.dragAndDropBy(slider, 30, 0).build();
+        action.perform();
 
         TimeUnit.SECONDS.sleep(3);
+
         String afterSum = checkSum();
         System.out.println(afterSum);
 
@@ -135,6 +133,11 @@ public class Test1 {
     }
 
     @Test
+    public void slider() throws Exception{
+        sumSlider();
+    }
+
+/*    @Test
     public void test1() throws Exception {
         System.out.println("Тест 1");
         saveLogo();
@@ -152,6 +155,6 @@ public class Test1 {
     public void comboBox() throws Exception {
         System.out.println("Изменение срока вклада через выпадающий список");
         sumComboBox();
-    }
+    }*/
 
 }
