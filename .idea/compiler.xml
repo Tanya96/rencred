@@ -26,7 +26,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ren_test1" target="1.5" />
+      <module name="ren_test1" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

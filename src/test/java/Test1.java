@@ -1,9 +1,7 @@
+
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -14,17 +12,18 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.actions;
 
 public class Test1 {
 
     private void gotoInvestorsPage()throws InterruptedException {
-        $(By.linkText("О банке")).click();
-        $(By.linkText("Инвесторам")).click();
-        $(By.linkText("Отчетность")).click();
-        $(By.linkText("Отчетность банка")).click();
+        $(By.xpath("//a[@href='/about/']")).click();
+        $(By.xpath("//a[@href='/investors/']")).click();
+        $(By.xpath("//a[@href='/investors/reporting/']")).click();
+        $(By.xpath("//a[@href='/investors/reporting/otchetnost-banka-po-msfo/otchetnost-banka/']")).click();
         TimeUnit.SECONDS.sleep(1);
     }
 
@@ -55,7 +54,7 @@ public class Test1 {
     }
 
     private String gotoDeposit(){
-        $(By.linkText("Вклады")).click();
+        $(By.xpath("//div/div/div/a[@href='/contributions/'][@class='home-nav__title-link']")).click();
         String beforeSum = checkSum();
         System.out.println(beforeSum);
         return beforeSum;
@@ -87,28 +86,31 @@ public class Test1 {
 
     }
 
-    private void sumSlider() throws InterruptedException {
+    String cssBaloon = ".calculator__slide-section div[class*='ui-slider'] span";
+    String cssAmountInput = ".calculator__slide-section input[name='amount']";
 
-        String beforeSum = gotoDeposit();
+    public void moveSlider(ICondition direction, ICondition finish) {
+        actions().clickAndHold($(cssBaloon))
+                .perform();
 
-        WebElement slider = $(By.xpath("//div[@data-property='amount']/div/div/span"));
-        System.out.println(slider.getAttribute("style"));
-
-
-        //Дима, хелп!!!
-
-        Actions move = new Actions(getWebDriver());
-        Action action = move.dragAndDropBy(slider, 30, 0).build();
-        action.perform();
-
-        TimeUnit.SECONDS.sleep(3);
-
-        String afterSum = checkSum();
-        System.out.println(afterSum);
-
-        change(beforeSum, afterSum);
-        TimeUnit.SECONDS.sleep(1);
+        while (!finish.isTrue()) {
+            actions().moveByOffset(direction.isTrue() ? 1 : -1, 0)
+                    .perform();
+        }
+        actions().release()
+                .perform();
     }
+
+    public void setSliderToAmount(int amount) {
+        // Лямбда выражении (Java 8)
+        moveSlider( () -> amount > getCurrentAmount(),
+                () -> getCurrentAmount() == amount);
+    }
+
+    public int getCurrentAmount() {
+        return Integer.parseInt($(cssAmountInput).val().replace(" ",""));
+    }
+
 
     private void sumComboBox() throws InterruptedException {
         String beforeSum = gotoDeposit();
@@ -129,32 +131,56 @@ public class Test1 {
     @BeforeTest
     private void openStatement() throws InterruptedException {
         open("https://rencredit.ru");
-        Assert.assertTrue(title().contains("Ренессанс Кредит"));
+       // Assert.assertTrue(title().contains("Ренессанс Кредит"));
     }
 
     @Test
-    public void slider() throws Exception{
-        sumSlider();
+    public void test() {
+        Selenide.open("https://rencredit.ru/contributions/");
+        setSliderToAmount(5000000);
+        Selenide.sleep(5000);
     }
 
-/*    @Test
+    /*@Test
     public void test1() throws Exception {
-        System.out.println("Тест 1");
+        System.out.println("Test 1");
         saveLogo();
         gotoInvestorsPage();
         savePDF();
     }
-
-    @Test
+*/
+   /* @Test
     public void textBox() throws Exception {
-        System.out.println("Изменение суммы вклада через поле ввода");
+      //  System.out.println("Изменение суммы вклада через поле ввода");
         sumTextBox();
     }
-
-    @Test
+*/
+   /* @Test
     public void comboBox() throws Exception {
         System.out.println("Изменение срока вклада через выпадающий список");
         sumComboBox();
-    }*/
-
+    }
+*/
 }
+
+
+
+/* String beforeSum = gotoDeposit();
+
+        WebElement slider = $(By.xpath("//div[@data-property='amount']/div/div/span"));
+        System.out.println(slider.getAttribute("style"));
+
+
+        //Дима, хелп!!!
+
+        Actions move = new Actions(getWebDriver());
+        Action action = move.dragAndDropBy(slider, 30, 0).build();
+        action.perform();
+
+        TimeUnit.SECONDS.sleep(3);
+
+        String afterSum = checkSum();
+        System.out.println(afterSum);
+
+        change(beforeSum, afterSum);
+        TimeUnit.SECONDS.sleep(1);*/
