@@ -1,23 +1,37 @@
-
 import com.codeborne.selenide.Selenide;
+import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.sql.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
-
-
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.actions;
 
+@Listeners(TestListener.class)
 public class Test1 {
+
+    public static void main(String[] args) throws SQLException {
+        try{
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        }
+        catch (SQLException e){
+            System.out.println("ошибка регистрации драйвера");
+        }
+    }
+
+    String cssBaloon = ".calculator__slide-section div[class*='ui-slider'] span";
+    String cssAmountInput = ".calculator__slide-section input[name='amount']";
 
     private void gotoInvestorsPage()throws InterruptedException {
         $(By.xpath("//a[@href='/about/']")).click();
@@ -71,7 +85,6 @@ public class Test1 {
             System.out.println("Не изменено");
     }
 
-
     private void sumTextBox() throws InterruptedException {
         String beforeSum = gotoDeposit();
 
@@ -86,10 +99,7 @@ public class Test1 {
 
     }
 
-    String cssBaloon = ".calculator__slide-section div[class*='ui-slider'] span";
-    String cssAmountInput = ".calculator__slide-section input[name='amount']";
-
-    public void moveSlider(ICondition direction, ICondition finish) {
+    private void moveSlider(ICondition direction, ICondition finish) {
         actions().clickAndHold($(cssBaloon))
                 .perform();
 
@@ -101,16 +111,15 @@ public class Test1 {
                 .perform();
     }
 
-    public void setSliderToAmount(int amount) {
+    private void setSliderToAmount(int amount) {
         // Лямбда выражении (Java 8)
         moveSlider( () -> amount > getCurrentAmount(),
                 () -> getCurrentAmount() == amount);
     }
 
-    public int getCurrentAmount() {
+    private int getCurrentAmount() {
         return Integer.parseInt($(cssAmountInput).val().replace(" ",""));
     }
-
 
     private void sumComboBox() throws InterruptedException {
         String beforeSum = gotoDeposit();
@@ -134,53 +143,31 @@ public class Test1 {
        // Assert.assertTrue(title().contains("Ренессанс Кредит"));
     }
 
-    @Test
-    public void test() {
+   /* @Test
+    public void test2_slider() {
         Selenide.open("https://rencredit.ru/contributions/");
         setSliderToAmount(5000000);
-        Selenide.sleep(5000);
+        TimeUnit.SECONDS.sleep(2);
     }
+*/
 
-    /*@Test
+    @Test
     public void test1() throws Exception {
-        System.out.println("Test 1");
         saveLogo();
         gotoInvestorsPage();
         savePDF();
+        TimeUnit.SECONDS.sleep(2);
     }
-*/
-   /* @Test
-    public void textBox() throws Exception {
-      //  System.out.println("Изменение суммы вклада через поле ввода");
+
+    @Test
+    public void test2_textBox() throws Exception {
         sumTextBox();
+        TimeUnit.SECONDS.sleep(2);
     }
-*/
-   /* @Test
-    public void comboBox() throws Exception {
-        System.out.println("Изменение срока вклада через выпадающий список");
+
+    @Test
+    public void test2_comboBox() throws Exception {
         sumComboBox();
+        TimeUnit.SECONDS.sleep(2);
     }
-*/
 }
-
-
-
-/* String beforeSum = gotoDeposit();
-
-        WebElement slider = $(By.xpath("//div[@data-property='amount']/div/div/span"));
-        System.out.println(slider.getAttribute("style"));
-
-
-        //Дима, хелп!!!
-
-        Actions move = new Actions(getWebDriver());
-        Action action = move.dragAndDropBy(slider, 30, 0).build();
-        action.perform();
-
-        TimeUnit.SECONDS.sleep(3);
-
-        String afterSum = checkSum();
-        System.out.println(afterSum);
-
-        change(beforeSum, afterSum);
-        TimeUnit.SECONDS.sleep(1);*/
