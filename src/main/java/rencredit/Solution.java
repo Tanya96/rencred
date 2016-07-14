@@ -1,7 +1,9 @@
 package rencredit;
 
+import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,6 +12,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -19,12 +24,14 @@ public class Solution {
     String cssBaloon = ".calculator__slide-section div[class*='ui-slider'] span";
     String cssAmountInput = ".calculator__slide-section input[name='amount']";
 
-    public void gotoInvestorsPage()throws InterruptedException {
-        $(By.xpath("//a[@href='/about/']")).click();
-        $(By.xpath("//a[@href='/investors/']")).click();
-        $(By.xpath("//a[@href='/investors/reporting/']")).click();
-        $(By.xpath("//a[@href='/investors/reporting/otchetnost-banka-po-msfo/otchetnost-banka/']")).click();
-        TimeUnit.SECONDS.sleep(1);
+    public void driver(){
+        try{
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        }
+        catch (SQLException e){
+            System.out.println("ошибка регистрации драйвера");
+        }
     }
 
     public void saveLogo() throws IOException, InterruptedException {
@@ -32,6 +39,14 @@ public class Solution {
         BufferedImage bufferedImage = ImageIO.read(url);
         ImageIO.write(bufferedImage, "png", new File("logo.png"));
         System.out.println("Image downloaded");
+        TimeUnit.SECONDS.sleep(1);
+    }
+
+    public void gotoInvestorsPage()throws InterruptedException {
+        $(By.xpath("//a[@href='/about/']")).click();
+        $(By.xpath("//a[@href='/investors/']")).click();
+        $(By.xpath("//a[@href='/investors/reporting/']")).click();
+        $(By.xpath("//a[@href='/investors/reporting/otchetnost-banka-po-msfo/otchetnost-banka/']")).click();
         TimeUnit.SECONDS.sleep(1);
     }
 

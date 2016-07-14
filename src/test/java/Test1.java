@@ -1,39 +1,37 @@
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 import rencredit.Solution;
 
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
-
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import ru.yandex.qatools.allure.annotations.Step;
 
-import java.sql.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.codeborne.selenide.Selenide.*;
 
 @Listeners(MyTestListener.class)
 public class Test1 {
-    private Solution sol = new Solution();
-    public static void main(String[] args) throws SQLException {
-        try{
-            Driver driver = new FabricMySQLDriver();
-            DriverManager.registerDriver(driver);
-        }
-        catch (SQLException e){
-            System.out.println("ошибка регистрации драйвера");
-        }
-    }
 
-    @BeforeTest
+    private Solution sol = new Solution();
+
+    @BeforeMethod
     private void openStatement() throws InterruptedException {
+        sol.driver();
         open("https://rencredit.ru");
-        Assert.assertTrue(title().contains("Ренессанс Кредит"));
+
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1_check(){
+        Assert.assertTrue(title().contains("Ренессанс Кредит"));
+    }
+    @Test
+    public void test1_logo() throws Exception{
         sol.saveLogo();
+    }
+
+    @Test
+    public void test1_PDF() throws Exception {
         sol.gotoInvestorsPage();
         sol.savePDF();
         TimeUnit.SECONDS.sleep(2);
@@ -43,7 +41,6 @@ public class Test1 {
     public void test2_textBox() throws Exception {
         sol.sumTextBox();
         TimeUnit.SECONDS.sleep(2);
-
     }
 
     /* @Test
