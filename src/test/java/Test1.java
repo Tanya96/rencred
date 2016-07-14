@@ -43,6 +43,7 @@ public class Test1 {
     public void test2_textBox() throws Exception {
         sol.sumTextBox();
         TimeUnit.SECONDS.sleep(2);
+
     }
 
     /* @Test
