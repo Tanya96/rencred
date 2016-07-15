@@ -135,6 +135,10 @@
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
                     <systemPropertyVariables>
+
+                            <webdriver.chrome.driver>${path.chrome}</webdriver.chrome.driver>
+                            <browser>${runner.browser}</browser>
+
                         <tempDirectory>${project.build.directory}\temp</tempDirectory>
                     </systemPropertyVariables>
                 </configuration>

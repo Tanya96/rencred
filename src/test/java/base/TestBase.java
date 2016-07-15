@@ -1,9 +1,6 @@
 package base;
 
-import rencredit.pages.AboutPage;
-import rencredit.pages.InvestorsPage;
-import rencredit.pages.MainPage;
-import rencredit.pages.ReportsPage;
+import rencredit.pages.*;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
 import java.io.File;
@@ -19,6 +16,9 @@ public class TestBase {
     public static final AboutPage ABOUT_PAGE = new AboutPage("https://rencredit.ru/about");
     public static final InvestorsPage INVESTORS_PAGE = new InvestorsPage("https://rencredit.ru/investors");
     public static final ReportsPage REPORTS_PAGE = new ReportsPage("https://rencredit.ru/investors/reporting");
+    public static final SavePDFPage SAVE_PDF_PAGE = new SavePDFPage("https://rencredit.ru/investors/reporting/otchetnost-banka-po-msfo/otchetnost-banka/");
+
+    public static final GoToDeposit GO_TO_DEPOSIT = new GoToDeposit("https://rencredit.ru/contributions/");
 
     @Attachment(value = "{0}")
     public byte[] attachToAllure(String fileName, File file) {

@@ -1,27 +1,33 @@
 package rencredit.pages;
 
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.title;
 import static org.testng.Assert.fail;
 
 /**
  * Created by Fiatlux on 14.07.2016.
  */
-public class MainPage extends BasePage{
+public class MainPage extends BasePage {
 
     private static final By LOGO = By.cssSelector("img.logo__image");
 
     public MainPage(String url){
         super(url);
+    }
+
+    @Step("Шаг. Проверка подлинности")
+    public void authentication(){
+        Assert.assertTrue(title().contains("Ренессанс Кредит"));
     }
 
     @Step("Шаг. Сохранение лого")
@@ -42,4 +48,5 @@ public class MainPage extends BasePage{
 
         return savedLogo;
     }
+
 }
