@@ -18,7 +18,7 @@ public class TestBase {
     public static final ReportsPage REPORTS_PAGE = new ReportsPage("https://rencredit.ru/investors/reporting");
     public static final SavePDFPage SAVE_PDF_PAGE = new SavePDFPage("https://rencredit.ru/investors/reporting/otchetnost-banka-po-msfo/otchetnost-banka/");
 
-    public static final GoToDeposit GO_TO_DEPOSIT = new GoToDeposit("https://rencredit.ru/contributions/");
+    public static final GoToLoans GO_TO_LOANS = new GoToLoans("https://rencredit.ru/loans/");
 
     @Attachment(value = "{0}")
     public byte[] attachToAllure(String fileName, File file) {
