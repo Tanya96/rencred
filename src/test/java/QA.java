@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static base.TestBase.GO_TO_DEPOSIT;
+import static base.TestBase.GO_TO_LOANS;
 import static base.TestBase.MAIN_PAGE;
 import static base.TestBase.SAVE_PDF_PAGE;
 import static listeners.MyClassListener.*;
 
-public class Test1 {
+public class QA {
 
     @Test
     @Listeners(MyTestListener.class)
@@ -60,18 +60,18 @@ public class Test1 {
         }
         @Test
         public void test2_textBox() throws Exception {
-            GO_TO_DEPOSIT.sumTextBox();
+            GO_TO_LOANS.sumTextBox();
         }
 
         @Test
         public void test2_slider() {
-            GO_TO_DEPOSIT.setSliderToAmount(1000000);
+            GO_TO_LOANS.setSliderToAmount(70000);
             Selenide.sleep(2);
         }
 
         @Test
         public void test2_comboBox() throws Exception {
-            GO_TO_DEPOSIT.sumComboBox();
+            GO_TO_LOANS.sumComboBox();
         }
     }
     @Attachment()
