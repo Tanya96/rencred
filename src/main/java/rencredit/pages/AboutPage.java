@@ -1,6 +1,4 @@
 package rencredit.pages;
-
-
 /**
  * Created by andrey on 15.07.2016.
  */

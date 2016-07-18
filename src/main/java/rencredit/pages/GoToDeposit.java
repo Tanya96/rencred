@@ -6,7 +6,7 @@ import rencredit.ICondition;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.concurrent.TimeUnit;
-
+import static org.testng.Assert.fail;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.actions;
 
@@ -30,7 +30,7 @@ public class GoToDeposit extends BasePage {
         if(!before.equals(after))
             System.out.println("Изменено");
         else
-            System.out.println("Не изменено");
+            fail("Не изменено");
     }
 
     @Step("Шаг. Ввод в текстовое поле")
@@ -45,7 +45,6 @@ public class GoToDeposit extends BasePage {
 
         change(beforeSum, afterSum);
         TimeUnit.SECONDS.sleep(1);
-
     }
 
     @Step("Шаг. Изменение comboBox")
@@ -62,7 +61,6 @@ public class GoToDeposit extends BasePage {
 
         change(beforeSum, afterSum);
         TimeUnit.SECONDS.sleep(1);
-
     }
 
     String cssBaloon = ".calculator__slide-section div[class*='ui-slider'] span";

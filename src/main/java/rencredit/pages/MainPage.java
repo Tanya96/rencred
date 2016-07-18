@@ -1,8 +1,6 @@
 package rencredit.pages;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
-import org.testng.Assert;
+import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import javax.imageio.ImageIO;
@@ -10,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.title;
@@ -32,7 +32,6 @@ public class MainPage extends BasePage {
         if(!title.equals("Банк «Ренессанс Кредит»"))
         {
             fail("Ошибка проверки");
-
         }
     }
 
@@ -46,13 +45,12 @@ public class MainPage extends BasePage {
             BufferedImage bufferedImage = ImageIO.read(url);
             savedLogo = new File("target/logo.png");
             ImageIO.write(bufferedImage, "png", savedLogo);
+
         } catch (IOException e) {
             fail("Ошибка сохранения Logo: " + e.getMessage());
             e.printStackTrace();
             return null;
         }
-
         return savedLogo;
     }
-
 }

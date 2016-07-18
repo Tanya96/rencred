@@ -1,6 +1,13 @@
 import com.codeborne.selenide.Selenide;
 import listeners.MyTestListener;
 import org.testng.annotations.*;
+import rencredit.pages.MainPage;
+import ru.yandex.qatools.allure.annotations.Attachment;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static base.TestBase.GO_TO_DEPOSIT;
 import static base.TestBase.MAIN_PAGE;
@@ -14,7 +21,6 @@ public class Test1 {
     public class testik1{
         @BeforeClass
         public void beforeClass() {
-
             onBeforeClass(this.getClass().getCanonicalName());
         }
         @AfterClass
@@ -30,6 +36,7 @@ public class Test1 {
         @Test
         public void test1_logo() throws Exception {
             MAIN_PAGE.saveLogo();
+            saveImageAttach("allureimage");
             SAVE_PDF_PAGE.savePDF();
         }
 
@@ -38,7 +45,6 @@ public class Test1 {
             SAVE_PDF_PAGE.savePDF();
         }
     }
-
 
     @Test
     @Listeners(MyTestListener.class)
@@ -68,4 +74,20 @@ public class Test1 {
             GO_TO_DEPOSIT.sumComboBox();
         }
     }
+    @Attachment()
+    public static byte[] saveImageAttach(String attachName) {
+        try {
+            java.net.URL defaultImage = MainPage.class.getResource("target/logo.png");
+            File imageFile = new File(defaultImage.toURI());
+            return toByteArray(imageFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
+
+    private static byte[] toByteArray(File file) throws IOException {
+        return Files.readAllBytes(Paths.get(file.getPath()));
+    }
+
 }
