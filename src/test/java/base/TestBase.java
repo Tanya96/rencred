@@ -31,6 +31,7 @@ public class TestBase {
             return Files.readAllBytes(file.toPath());
         } catch (IOException ex) {
             return String.format("IOException was occured in Attacher class! Throwable: %s", ex.getMessage()).getBytes();
+
         }
     }
 }

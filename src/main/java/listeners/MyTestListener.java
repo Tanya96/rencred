@@ -70,6 +70,7 @@ public class MyTestListener extends TestListenerAdapter {
         }
         catch (SQLException e){
             e.printStackTrace();
+
         }
     }
 }

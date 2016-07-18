@@ -91,6 +91,7 @@ public class GoToLoans extends BasePage {
     public int getCurrentAmount() {
         System.out.println($(cssAmountInput).val().replace(" ",""));
         return Integer.parseInt($(cssAmountInput).val().replace(" ",""));
+
     }
 
 }

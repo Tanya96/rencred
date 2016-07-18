@@ -51,6 +51,7 @@ public class MainPage extends BasePage {
             e.printStackTrace();
             return null;
         }
+
         return savedLogo;
     }
 }
