@@ -15,8 +15,8 @@
     </parent>
 
     <properties>
-        <path.chrome>src/main/resources/chromedriver.exe</path.chrome>
-        <runner.browser>chrome</runner.browser>
+       <!-- <path.chrome>src/main/resources/chromedriver.exe</path.chrome>
+        <runner.browser>chrome</runner.browser>-->
         <allure.version>1.4.22</allure.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aspectj.version>1.8.3</aspectj.version>
@@ -136,8 +136,8 @@
                     </argLine>
                     <systemPropertyVariables>
 
-                            <webdriver.chrome.driver>${path.chrome}</webdriver.chrome.driver>
-                            <browser>${runner.browser}</browser>
+                           <!-- <webdriver.chrome.driver>${path.chrome}</webdriver.chrome.driver>
+                            <browser>${runner.browser}</browser>-->
 
                         <tempDirectory>${project.build.directory}\temp</tempDirectory>
                     </systemPropertyVariables>

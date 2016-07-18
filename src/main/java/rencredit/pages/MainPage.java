@@ -1,5 +1,6 @@
 package rencredit.pages;
-
+import com.codeborne.selenide.Selectors;
+import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import ru.yandex.qatools.allure.annotations.Step;
@@ -20,14 +21,19 @@ import static org.testng.Assert.fail;
 public class MainPage extends BasePage {
 
     private static final By LOGO = By.cssSelector("img.logo__image");
-
+    public String title;
     public MainPage(String url){
         super(url);
+        title = title();
     }
 
     @Step("Шаг. Проверка подлинности")
     public void authentication(){
-        Assert.assertTrue(title().contains("Ренессанс Кредит"));
+        if(!title.equals("Банк «Ренессанс Кредит»"))
+        {
+            fail("Ошибка проверки");
+
+        }
     }
 
     @Step("Шаг. Сохранение лого")

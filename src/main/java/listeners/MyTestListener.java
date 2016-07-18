@@ -1,10 +1,11 @@
 package listeners;
 
-import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
-
+import org.testng.*;
 import java.sql.*;
 import java.util.Date;
+
+import static listeners.MyClassListener.k;
+import static listeners.MyClassListener.key;
 
 public class MyTestListener extends TestListenerAdapter {
     private static final String USERNAME = "root";
@@ -27,11 +28,11 @@ public class MyTestListener extends TestListenerAdapter {
         ts_end = new Timestamp(ending.getTime());
         time_completion =(int) ((ending.getTime()-beginning.getTime())/1000);
         try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            String query = " insert into res_test.test (name, begining, ending, status, time_completion)"
+            String query = " insert into res_test.step (ID_test, begining, ending, status, time_completion)"
                     + " values (?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString      (1, testResult.getName());
+            preparedStmt.setInt         (1, key);
             preparedStmt.setTimestamp   (2, ts_begin);
             preparedStmt.setTimestamp   (3, ts_end);
             preparedStmt.setInt         (4, testResult.getStatus());
@@ -48,15 +49,16 @@ public class MyTestListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult testResult)
     {
+        k = false;
         ending = new Date();
         ts_end = new Timestamp(ending.getTime());
         time_completion =(int) ((ending.getTime()-beginning.getTime())/1000);
         try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD)) {
-            String query = " insert into res_test.test (name, begining, ending, status, time_completion)"
+            String query = " insert into res_test.step (ID_test, begining, ending, status, time_completion)"
                     + " values (?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.setString      (1, testResult.getName());
+            preparedStmt.setInt         (1, key);
             preparedStmt.setTimestamp   (2, ts_begin);
             preparedStmt.setTimestamp   (3, ts_end);
             preparedStmt.setInt         (4, testResult.getStatus());
