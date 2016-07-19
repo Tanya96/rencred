@@ -14,7 +14,7 @@ import static base.TestBase.MAIN_PAGE;
 import static base.TestBase.SAVE_PDF_PAGE;
 import static listeners.MyClassListener.*;
 
-public class QA {
+public class Test1 {
 
     @Test
     @Listeners(MyTestListener.class)
@@ -72,6 +72,7 @@ public class QA {
         @Test
         public void test2_comboBox() throws Exception {
             GO_TO_LOANS.sumComboBox();
+
         }
     }
     @Attachment()
